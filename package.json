@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "eslint src/**/*.js test/**/*.js && mocha test/**/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/catdad/app-icon-maker#readme",
   "devDependencies": {
-    "eslint": "^5.16.0"
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "mocha": "^8.0.1"
   },
   "dependencies": {
     "@catdad/to-ico": "^1.0.0",
