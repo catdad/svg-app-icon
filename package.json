@@ -2,7 +2,7 @@
   "name": "app-icon-maker",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/maker.js",
   "scripts": {
     "test": "eslint src/**/*.js test/**/*.js && mocha test/**/*.test.js"
   },
@@ -19,8 +19,10 @@
   "homepage": "https://github.com/catdad/app-icon-maker#readme",
   "devDependencies": {
     "chai": "^4.2.0",
+    "del": "^5.1.0",
     "eslint": "^5.16.0",
-    "mocha": "^8.0.1"
+    "mocha": "^8.0.1",
+    "tempy": "^0.6.0"
   },
   "dependencies": {
     "@catdad/to-ico": "^1.0.0",
