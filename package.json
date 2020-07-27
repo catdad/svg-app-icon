@@ -19,5 +19,13 @@
   "homepage": "https://github.com/catdad/app-icon-maker#readme",
   "devDependencies": {
     "eslint": "^5.16.0"
+  },
+  "dependencies": {
+    "@catdad/to-ico": "^1.0.0",
+    "@fiahfy/icns": "0.0.6",
+    "svg-render": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   }
 }
