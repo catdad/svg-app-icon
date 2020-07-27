@@ -62,13 +62,15 @@ describe('app-icon-maker', () => {
     await validateIcons(outdir);
   });
 
-  it('can optionally skip icns output');
+  for (let exclude of ['icns', 'ico', 'png', 'svg']) {
+    it(`can optionally skip ${exclude} output`, async () => {
+      destination = tempy.directory();
 
-  it('can optionally skip ico output');
+      await maker(svg, { destination, [exclude]: false });
 
-  it('can optionally skip the png output');
-
-  it('can optionally skip the svg output');
+      await validateIcons(destination, { [exclude]: false });
+    });
+  }
 
   it('can optionally generate arbitrary png sizes');
 });
