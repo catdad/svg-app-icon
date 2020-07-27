@@ -1,0 +1,27 @@
+language: node_js
+
+node_js:
+  - '14'
+  - '12'
+  - '10'
+
+os:
+  - linux
+  - osx
+  - windows
+
+env:
+  global:
+    - FORCE_COLOR=1
+
+install:
+  - npm install
+
+script:
+  - npm test
+
+jobs:
+  exclude:
+    # https://github.com/Automattic/node-canvas/issues/1626
+    - os: osx
+      node_js: '14'
