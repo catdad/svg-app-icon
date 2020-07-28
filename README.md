@@ -7,8 +7,8 @@
 [![npm-version][npm-version.svg]][npm.link]
 [![dm-david][dm-david.svg]][dm-david.link]
 
-[travis.svg]: https://travis-ci.com/catdad/svg-app-icon.svg?branch=master
-[travis.link]: https://travis-ci.com/catdad/svg-app-icon
+[travis.svg]: https://travis-ci.com/catdad/app-icon-maker.svg?branch=master
+[travis.link]: https://travis-ci.com/catdad/app-icon-maker
 [npm-downloads.svg]: https://img.shields.io/npm/dm/svg-app-icon.svg
 [npm.link]: https://www.npmjs.com/package/svg-app-icon
 [npm-version.svg]: https://img.shields.io/npm/v/svg-app-icon.svg
