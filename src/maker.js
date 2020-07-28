@@ -12,7 +12,7 @@ const write = async (dest, content) => {
   await fs.writeFile(dest, content);
 };
 
-const createPng = async (buffer, width = 512) => await renderSvg({ buffer, width });
+const createPng = async (buffer, size) => await renderSvg({ buffer, width: size, height: size });
 
 const createIco = async svg => await toIco(
   await Promise.all([16, 24, 32, 48, 64, 128, 256].map(size => createPng(svg, size)))

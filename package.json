@@ -4,7 +4,10 @@
   "description": "",
   "main": "src/maker.js",
   "scripts": {
-    "test": "eslint src/**/*.js test/**/*.js && mocha test/**/*.test.js"
+    "lint": "eslint src/**/*.js test/**/*.js",
+    "test:cover": "nyc npm run -s test:run",
+    "test:run": "mocha test/**/*.test.js",
+    "test": "npm run -s lint && npm run test:cover"
   },
   "repository": {
     "type": "git",
@@ -23,6 +26,7 @@
     "eslint": "^5.16.0",
     "file-type": "^14.6.2",
     "mocha": "^8.0.1",
+    "nyc": "^15.1.0",
     "pngjs": "^5.0.0",
     "tempy": "^0.6.0"
   },
