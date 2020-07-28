@@ -123,5 +123,28 @@ describe('app-icon-maker', () => {
     });
   }
 
-  it('can optionally generate arbitrary png sizes');
+  it('can optionally generate arbitrary png sizes', async () => {
+    destination = tempy.directory();
+    const pngSizes = [47, 345, 1000];
+
+    await maker(svg, { destination, icns: false, ico: false, svg: false, pngSizes });
+
+    const actualFiles = await fs.readdir(destination);
+
+    expect(actualFiles.sort()).to.deep.equal([
+      '47x47.png',
+      '345x345.png',
+      '1000x1000.png'
+    ].sort());
+
+    for (let size of pngSizes) {
+      const buffer = await fs.readFile(path.resolve(destination, `${size}x${size}.png`));
+      expect(await type.fromBuffer(buffer)).to.deep.equal({ ext: 'png', mime: 'image/png' });
+      const { width, height, depth } = png.read(buffer);
+
+      expect(width).to.equal(size);
+      expect(height).to.equal(size);
+      expect(depth).to.equal(8);
+    }
+  });
 });
