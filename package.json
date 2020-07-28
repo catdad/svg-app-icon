@@ -1,7 +1,7 @@
 {
   "name": "app-icon-maker",
   "version": "1.0.0",
-  "description": "create desktop app icons for Windows, MacOS, and Linux using an SVG source",
+  "description": "create high-quality desktop app icons for Windows, MacOS, and Linux using an SVG source",
   "main": "src/maker.js",
   "scripts": {
     "lint": "eslint src/**/*.js test/**/*.js",
@@ -13,7 +13,6 @@
     "type": "git",
     "url": "git+https://github.com/catdad/app-icon-maker.git"
   },
-  "keywords": [],
   "author": "Kiril Vatev <vatev.1@gmail.com>",
   "license": "ISC",
   "bugs": {
@@ -43,5 +42,17 @@
   ],
   "directories": {
     "test": "test"
-  }
+  },
+  "keywords": [
+    "icns",
+    "ico",
+    "png",
+    "icons",
+    "svg",
+    "macos",
+    "windows",
+    "linux",
+    "desktop",
+    "electron"
+  ]
 }
