@@ -1,4 +1,4 @@
-# app icon maker
+# svg app icon
 
 > 🖼 Create high-quality desktop app icons for Windows, MacOS, and Linux using an SVG source
 
@@ -7,36 +7,36 @@
 [![npm-version][npm-version.svg]][npm.link]
 [![dm-david][dm-david.svg]][dm-david.link]
 
-[travis.svg]: https://travis-ci.com/catdad/app-icon-maker.svg?branch=master
-[travis.link]: https://travis-ci.com/catdad/app-icon-maker
-[npm-downloads.svg]: https://img.shields.io/npm/dm/app-icon-maker.svg
-[npm.link]: https://www.npmjs.com/package/app-icon-maker
-[npm-version.svg]: https://img.shields.io/npm/v/app-icon-maker.svg
-[dm-david.svg]: https://david-dm.org/catdad/app-icon-maker.svg
-[dm-david.link]: https://david-dm.org/catdad/app-icon-maker
+[travis.svg]: https://travis-ci.com/catdad/svg-app-icon.svg?branch=master
+[travis.link]: https://travis-ci.com/catdad/svg-app-icon
+[npm-downloads.svg]: https://img.shields.io/npm/dm/svg-app-icon.svg
+[npm.link]: https://www.npmjs.com/package/svg-app-icon
+[npm-version.svg]: https://img.shields.io/npm/v/svg-app-icon.svg
+[dm-david.svg]: https://david-dm.org/catdad/svg-app-icon.svg
+[dm-david.link]: https://david-dm.org/catdad/svg-app-icon
 
 ## 📥 Install
 
 ```bash
-npm install app-icon-maker
+npm install svg-app-icon
 ```
 
 ## 👨‍💻 API
 
 ```javascript
 const { promises: fs } = require('fs');
-const maker = require('app-icon-maker');
+const icons = require('svg-app-icon');
 
 (async () => {
   const svg = await fs.readFile('my-icon.svg');
 
-  await maker(svg, {
+  await icons(svg, {
     destination: './my-output-directory'
   });
 })();
 ```
 
-### `maker(svg, options)` → `Promise`
+### `icons(svg, options)` → `Promise`
 
 The arguments for this method are:
 * `svg` _`String`|`Buffer`_ - the SVG that you'd like to use as the icon
