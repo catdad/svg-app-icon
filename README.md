@@ -15,13 +15,13 @@
 [dm-david.svg]: https://david-dm.org/catdad/app-icon-maker.svg
 [dm-david.link]: https://david-dm.org/catdad/app-icon-maker
 
-## Install
+## 📥 Install
 
 ```bash
 npm install app-icon-maker
 ```
 
-## API
+## 👨‍💻 API
 
 ```javascript
 const { promises: fs } = require('fs');
@@ -50,7 +50,7 @@ The arguments for this method are:
 
 This promise resolves with `undefined`.
 
-## But Why?
+## 🤷‍♀️ But Why?
 
 There are very many tools to help you generate desktop app icons. They all, however, take one large PNG file as input and scale it down to generate all the necessary sizes. However, I have two problems:
 * I generate all my icons as SVG and would prefer not to manually pre-process them. I just want to check out the repo and have everyhting else automated.
