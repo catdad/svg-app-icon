@@ -1,7 +1,7 @@
 {
   "name": "app-icon-maker",
   "version": "1.0.0",
-  "description": "",
+  "description": "create desktop app icons for Windows, MacOS, and Linux using an SVG source",
   "main": "src/maker.js",
   "scripts": {
     "lint": "eslint src/**/*.js test/**/*.js",
@@ -37,5 +37,11 @@
   },
   "engines": {
     "node": ">=10.0.0"
+  },
+  "files": [
+    "src"
+  ],
+  "directories": {
+    "test": "test"
   }
 }
