@@ -1,6 +1,8 @@
 const { promises: fs } = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { execFile } = require('child_process');
+const { promisify } = require('util');
 
 const { expect } = require('chai');
 const tempy = require('tempy');
@@ -146,5 +148,16 @@ describe('app-icon-maker', () => {
       expect(height).to.equal(size);
       expect(depth).to.equal(8);
     }
+  });
+
+  it('places all icons in "icons" directory when no options are provided', async () => {
+    destination = tempy.directory();
+    const cmd = process.execPath;
+    const lib = JSON.stringify(require.resolve('../'));
+    const script = `require(${lib})('${svg}')`;
+
+    await promisify(execFile)(cmd, ['-e', script], { cwd: destination });
+
+    await validateIcons(path.resolve(destination, 'icons'));
   });
 });
