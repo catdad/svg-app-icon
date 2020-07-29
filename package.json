@@ -1,6 +1,6 @@
 {
   "name": "svg-app-icon",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "create high-quality desktop app icons for Windows, MacOS, and Linux using an SVG source",
   "main": "src/maker.js",
   "scripts": {
