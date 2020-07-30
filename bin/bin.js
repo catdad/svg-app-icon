@@ -3,15 +3,15 @@
 const defaults = {
   destination: 'icons',
   include: ['icns', 'ico', 'png', 'svg'],
-  'png-sizes': [32, 256, 512]
+  'png-size': [32, 256, 512]
 };
 
-const { destination, include, 'png-sizes': pngSizes, help } = require('getopts')(process.argv.slice(2), {
+const { destination, include, 'png-size': pngSizes, help } = require('getopts')(process.argv.slice(2), {
   alias: {
     help: 'h',
     destination: 'd',
     include: 'i',
-    'png-sizes': 's'
+    'png-size': 's'
   },
   string: ['include'],
   default: defaults
@@ -20,21 +20,21 @@ const { destination, include, 'png-sizes': pngSizes, help } = require('getopts')
 if (help) {
   // eslint-disable-next-line no-console
   console.log(`
-usage:
+Usage:
   svg-app-icon [options] < input.svg
 
-  Options:
-    --help             Show help
-    --destination, -d  Directory to output icons    [string]   [default: ${defaults.destination}]
-    --include, -i      Which icons to create        [string[]] [default: ${defaults.include.join(', ')}]
-    --png-sizes, -s    What size png images create  [number[]] [default: ${defaults['png-sizes'].join(', ')}]
+Options:
+  --help             Show help
+  --destination, -d  Directory to output icons    [string]   [default: ${defaults.destination}]
+  --include, -i      Which icons to create        [string[]] [default: ${defaults.include.join(', ')}]
+  --png-sizes, -s    What size png images create  [number[]] [default: ${defaults['png-size'].join(', ')}]
 
-  Note: all array arguments can be defined more than once
+Note: all array arguments can be defined more than once
 
-  Examples:
-    svg-app-icon < input.svg
-    svg-app-icon --include icns --include ico < input.svg
-    cat input.svg | svg-app-icon --destination build/assets
+Examples:
+  svg-app-icon < input.svg
+  svg-app-icon --include icns --include ico < input.svg
+  cat input.svg | svg-app-icon --destination build/assets
 `);
   process.exit(0);
 }
