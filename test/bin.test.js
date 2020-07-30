@@ -27,7 +27,10 @@ const once = (ee, name) => new Promise(resolve => {
 const run = async (cwd, args = []) => {
   const proc = spawn(process.execPath, [binPath, ...args], {
     cwd,
-    stdio: ['pipe', 'pipe', 'pipe']
+    stdio: ['pipe', 'pipe', 'pipe'],
+    env: {
+      NODE_NO_WARNINGS: 1
+    }
   });
 
   let err;
@@ -50,6 +53,14 @@ const run = async (cwd, args = []) => {
   return { exitCode, stdout, stderr };
 };
 
+const runSuccess = async (...args) => {
+  const { exitCode, stdout, stderr } = await run(...args);
+
+  expect(exitCode).to.equal(0);
+  expect(stdout).to.equal('');
+  expect(stderr).to.equal('');
+};
+
 describe('app-icon-maker CLI', () => {
   let destination;
 
@@ -64,7 +75,7 @@ describe('app-icon-maker CLI', () => {
   it('generates all icons by default usign svg string', async () => {
     destination = tempy.directory();
 
-    await run(destination);
+    await runSuccess(destination);
 
     await validateIcons(path.resolve(destination, 'icons'));
   });
@@ -72,7 +83,7 @@ describe('app-icon-maker CLI', () => {
   it('optionally outputs to a custom destination', async () => {
     destination = tempy.directory();
 
-    await run(destination, ['--destination', 'a/b/c']);
+    await runSuccess(destination, ['--destination', 'a/b/c']);
 
     await validateIcons(path.resolve(destination, 'a/b/c'));
   });
@@ -81,7 +92,7 @@ describe('app-icon-maker CLI', () => {
     it(`can optionally include only ${include} output`, async () => {
       destination = tempy.directory();
 
-      await run(destination, ['--include', include]);
+      await runSuccess(destination, ['--include', include]);
 
       const expected = {
         icns: include === 'icns',
@@ -97,7 +108,7 @@ describe('app-icon-maker CLI', () => {
   it('can optionally include multiple formats', async () => {
     destination = tempy.directory();
 
-    await run(destination, ['--include', 'ico', '--include', 'svg', '-i', 'png']);
+    await runSuccess(destination, ['--include', 'ico', '--include', 'svg', '-i', 'png']);
 
     const expected = {
       icns: false,
@@ -113,7 +124,7 @@ describe('app-icon-maker CLI', () => {
     destination = tempy.directory();
     const size = 291;
 
-    await run(destination, ['-i', 'png', '--png-size', size]);
+    await runSuccess(destination, ['-i', 'png', '--png-size', size]);
 
     const outdir = path.resolve(destination, 'icons');
 
@@ -136,7 +147,7 @@ describe('app-icon-maker CLI', () => {
     destination = tempy.directory();
     const pngSizes = [47, 345, 1000];
 
-    await run(destination, ['-i', 'png', '--png-size', pngSizes[0], '--png-size', pngSizes[1], '-s', pngSizes[2]]);
+    await runSuccess(destination, ['-i', 'png', '--png-size', pngSizes[0], '--png-size', pngSizes[1], '-s', pngSizes[2]]);
 
     const outdir = path.resolve(destination, 'icons');
 
