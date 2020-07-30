@@ -13,7 +13,7 @@ const { destination, include, 'png-sizes': pngSizes, help } = require('getopts')
     include: 'i',
     'png-sizes': 's'
   },
-  string: ['include', 'pngSizes'],
+  string: ['include'],
   default: defaults
 });
 
