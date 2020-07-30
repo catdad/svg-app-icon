@@ -102,10 +102,9 @@ describe('app-icon-maker', () => {
     }
   });
 
-  it('places all icons in "icons" directory when no options are provided', async function () {
-    this.timeout(this.timeout() * 2);
-
+  it('places all icons in "icons" directory when no options are provided', async () => {
     destination = tempy.directory();
+
     const cmd = process.execPath;
     const lib = JSON.stringify(require.resolve('../'));
     const script = `require(${lib})('${svg}')`;
