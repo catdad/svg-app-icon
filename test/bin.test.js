@@ -47,11 +47,7 @@ const run = async (cwd, args = []) => {
     throw err;
   }
 
-  if (exitCode !== 0) {
-    throw new Error(`CLI exited with code: ${exitCode}\n\n${stderr}`);
-  }
-
-  return { stdout, stderr };
+  return { exitCode, stdout, stderr };
 };
 
 describe('app-icon-maker CLI', () => {
@@ -113,7 +109,30 @@ describe('app-icon-maker CLI', () => {
     await validateIcons(path.resolve(destination, 'icons'), { ...expected });
   });
 
-  it('can optionally generate arbitrary png sizes', async () => {
+  it('can optionally generate a single arbitrary png size', async () => {
+    destination = tempy.directory();
+    const size = 291;
+
+    await run(destination, ['-i', 'png', '--png-size', size]);
+
+    const outdir = path.resolve(destination, 'icons');
+
+    const actualFiles = await fs.readdir(outdir);
+
+    expect(actualFiles.sort()).to.deep.equal([
+      `${size}x${size}.png`
+    ].sort());
+
+    const buffer = await fs.readFile(path.resolve(outdir, `${size}x${size}.png`));
+    expect(await type.fromBuffer(buffer)).to.deep.equal({ ext: 'png', mime: 'image/png' });
+    const { width, height, depth } = png.read(buffer);
+
+    expect(width).to.equal(size);
+    expect(height).to.equal(size);
+    expect(depth).to.equal(8);
+  });
+
+  it('can optionally generate multiple arbitrary png sizes', async () => {
     destination = tempy.directory();
     const pngSizes = [47, 345, 1000];
 
@@ -138,6 +157,15 @@ describe('app-icon-maker CLI', () => {
       expect(height).to.equal(size);
       expect(depth).to.equal(8);
     }
+  });
+
+  it('exits with an error if something goes wrong', async () => {
+    destination = tempy.directory();
+
+    const { exitCode, stderr } = await run(destination, ['-i', 'png', '--png-size', 'pineapples']);
+
+    expect(exitCode).to.equal(1);
+    expect(stderr).to.be.a('string').and.to.include('Error:');
   });
 
   it('prints help when the --help flag is included', async () => {
