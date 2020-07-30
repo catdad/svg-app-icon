@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "create high-quality desktop app icons for Windows, MacOS, and Linux using an SVG source",
   "main": "src/maker.js",
+  "bin": "bin/bin.js",
   "scripts": {
     "lint": "eslint src/**/*.js test/**/*.js",
     "test:cover": "nyc npm run -s test:run",
@@ -32,6 +33,7 @@
   "dependencies": {
     "@catdad/to-ico": "^1.0.0",
     "@fiahfy/icns": "0.0.6",
+    "getopts": "^2.2.5",
     "svg-render": "^1.1.0"
   },
   "engines": {
