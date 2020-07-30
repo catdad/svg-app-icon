@@ -1,4 +1,7 @@
+const { promises: fs } = require('fs');
 const crypto = require('crypto');
+const path = require('path');
+
 const { expect } = require('chai');
 const { sync: png } = require('pngjs').PNG;
 const type = require('file-type');
@@ -49,4 +52,20 @@ const validators = {
   }
 };
 
-module.exports = { hash, validators, svg, png, type };
+const validateIcons = async (dir, { icns = true, ico = true, png = true, svg = true } = {}) => {
+  const expectedFiles = []
+    .concat(icns ? ['icon.icns'] : [])
+    .concat(ico ? ['icon.ico'] : [])
+    .concat(png ? ['32x32.png', '256x256.png', '512x512.png'] : [])
+    .concat(svg ? ['icon.svg'] : []);
+
+  const actualFiles = await fs.readdir(dir);
+
+  expect(actualFiles.sort()).to.deep.equal(expectedFiles.sort());
+
+  for (let file of expectedFiles) {
+    await validators[file](await fs.readFile(path.resolve(dir, file)));
+  }
+};
+
+module.exports = { hash, validateIcons, validators, svg, png, type };
