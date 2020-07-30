@@ -2,7 +2,7 @@
 
 const defaults = {
   destination: 'icons',
-  include: ['icns', 'ico', 'svg', 'png'],
+  include: ['icns', 'ico', 'png', 'svg'],
   'png-sizes': [32, 256, 512]
 };
 
