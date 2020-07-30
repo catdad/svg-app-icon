@@ -68,7 +68,7 @@ Options:
   --help             Show help
   --destination, -d  Directory to output icons    [string]   [default: icons]
   --include, -i      Which icons to create        [string[]] [default: icns, ico, png, svg]
-  --png-sizes, -s    What size png images create  [number[]] [default: 32, 256, 512]
+  --png-size, -s     What size png images create  [number[]] [default: 32, 256, 512]
 
 Note: all array arguments can be defined more than once
 

@@ -27,7 +27,7 @@ Options:
   --help             Show help
   --destination, -d  Directory to output icons    [string]   [default: ${defaults.destination}]
   --include, -i      Which icons to create        [string[]] [default: ${defaults.include.join(', ')}]
-  --png-sizes, -s    What size png images create  [number[]] [default: ${defaults['png-size'].join(', ')}]
+  --png-size, -s     What size png images create  [number[]] [default: ${defaults['png-size'].join(', ')}]
 
 Note: all array arguments can be defined more than once
 
