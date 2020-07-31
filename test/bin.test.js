@@ -183,10 +183,18 @@ describe('app-icon-maker CLI', () => {
     const { stdout, stderr } = await run(__dirname, ['--help']);
 
     expect(stdout).to.be.a('string')
+      .and.to.include(`${pkg.name} v${pkg.version}`)
       .and.to.include('Usage:')
       .and.to.include('Options:')
       .and.to.include('Examples:');
 
+    expect(stderr.trim()).to.equal('');
+  });
+
+  it('prints version when the --version flag is included', async () => {
+    const { stdout, stderr } = await run(__dirname, ['--version']);
+
+    expect(stdout).to.equal(`${pkg.version}\n`);
     expect(stderr.trim()).to.equal('');
   });
 });

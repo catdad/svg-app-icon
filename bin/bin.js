@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 
+const pkg = require('../package.json');
+
 const defaults = {
   destination: 'icons',
   include: ['icns', 'ico', 'png', 'svg'],
   'png-size': [32, 256, 512]
 };
 
-const { destination, include, 'png-size': pngSizes, help } = require('getopts')(process.argv.slice(2), {
+const { destination, include, 'png-size': pngSizes, help, version } = require('getopts')(process.argv.slice(2), {
   alias: {
+    version: 'v',
     help: 'h',
     destination: 'd',
     include: 'i',
@@ -20,11 +23,14 @@ const { destination, include, 'png-size': pngSizes, help } = require('getopts')(
 if (help) {
   // eslint-disable-next-line no-console
   console.log(`
+${pkg.name} v${pkg.version}
+
 Usage:
-  svg-app-icon [options] < input.svg
+  ${pkg.name} [options] < input.svg
 
 Options:
   --help             Show help
+  --version          Show the version
   --destination, -d  Directory to output icons    [string]   [default: ${defaults.destination}]
   --include, -i      Which icons to create        [string[]] [default: ${defaults.include.join(', ')}]
   --png-size, -s     What size png images create  [number[]] [default: ${defaults['png-size'].join(', ')}]
@@ -32,10 +38,16 @@ Options:
 Note: all array arguments can be defined more than once
 
 Examples:
-  svg-app-icon < input.svg
-  svg-app-icon --include icns --include ico < input.svg
-  cat input.svg | svg-app-icon --destination build/assets
+  ${pkg.name} < input.svg
+  ${pkg.name} --include icns --include ico < input.svg
+  cat input.svg | ${pkg.name} --destination build/assets
 `);
+  process.exit(0);
+}
+
+if (version) {
+  // eslint-disable-next-line no-console
+  console.log(pkg.version);
   process.exit(0);
 }
 
