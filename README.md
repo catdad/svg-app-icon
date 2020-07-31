@@ -66,6 +66,7 @@ Usage:
 
 Options:
   --help             Show help
+  --version          Show the version
   --destination, -d  Directory to output icons    [string]   [default: icons]
   --include, -i      Which icons to create        [string[]] [default: icns, ico, png, svg]
   --png-size, -s     What size png images create  [number[]] [default: 32, 256, 512]
