@@ -50,6 +50,35 @@ The arguments for this method are:
 
 This promise resolves with `undefined`.
 
+## 💻 CLI
+
+You can also generate icons from the command line, so you don't have to write anything.
+
+```bash
+npx svg-app-icon < input.svg
+```
+
+Here are all the options (spoiler: they are the same as the API):
+
+```
+Usage:
+  svg-app-icon [options] < input.svg
+
+Options:
+  --help             Show help
+  --version          Show the version
+  --destination, -d  Directory to output icons    [string]   [default: icons]
+  --include, -i      Which icons to create        [string[]] [default: icns, ico, png, svg]
+  --png-size, -s     What size png images create  [number[]] [default: 32, 256, 512]
+
+Note: all array arguments can be defined more than once
+
+Examples:
+  svg-app-icon < input.svg
+  svg-app-icon --include icns --include ico < input.svg
+  cat input.svg | svg-app-icon --destination build/assets
+```
+
 ## 🤷‍♀️ But Why?
 
 There are very many tools to help you generate desktop app icons. They all, however, take one large PNG file as input and scale it down to generate all the necessary sizes. However, I have two problems:
