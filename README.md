@@ -5,15 +5,12 @@
 [![CI][ci.svg]][ci.link]
 [![npm-downloads][npm-downloads.svg]][npm.link]
 [![npm-version][npm-version.svg]][npm.link]
-[![dm-david][dm-david.svg]][dm-david.link]
 
 [ci.svg]: https://github.com/catdad/svg-app-icon/actions/workflows/ci.yml/badge.svg
 [ci.link]: https://github.com/catdad/svg-app-icon/actions/workflows/ci.yml
 [npm-downloads.svg]: https://img.shields.io/npm/dm/svg-app-icon.svg
 [npm.link]: https://www.npmjs.com/package/svg-app-icon
 [npm-version.svg]: https://img.shields.io/npm/v/svg-app-icon.svg
-[dm-david.svg]: https://david-dm.org/catdad/svg-app-icon.svg
-[dm-david.link]: https://david-dm.org/catdad/svg-app-icon
 
 ## 📥 Install
 
