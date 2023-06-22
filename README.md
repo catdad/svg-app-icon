@@ -82,7 +82,7 @@ Examples:
 ## 🤷‍♀️ But Why?
 
 There are very many tools to help you generate desktop app icons. They all, however, take one large PNG file as input and scale it down to generate all the necessary sizes. However, I have two problems:
-* I generate all my icons as SVG and would prefer not to manually pre-process them. I just want to check out the repo and have everyhting else automated.
+* I generate all my icons as SVG and would prefer not to manually pre-process them. I just want to check out the repo and have everything else automated.
 * I noticed that all the PNG-scaling solutions end up creating poor quality PNG images, especially for the smaller sizes. This results in icons that look bad.
 
-Since I use SVG, I actually don't need to scale PNG images. I can arbitrarily generate images of any size from the initial SVG. It just so happens that there are many solutions for that as well. However, for the most part, all have tradeoffs and quality issues as well. This module uses [`svg-render`](https://github.com/catdad-experiments/svg-render) in order to create high-quality PNGs at any size. You can even use responsive PNGs, to render customized and optimized icons for every size. Try it, it's fun! 🎉
+Since I use SVG, I actually don't need to scale PNG images. I can arbitrarily generate images of any size from the initial SVG. It just so happens that there are many solutions for that as well. However, for the most part, all have tradeoffs and quality issues as well. This module uses [`svg-render`](https://github.com/catdad-experiments/svg-render) in order to create high-quality PNGs at any size. You can even use responsive SVGs, to render customized and optimized icons for every size. Try it, it's fun! 🎉
