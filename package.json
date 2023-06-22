@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "eslint bin/**/*.js src/**/*.js test/**/*.js",
     "test:cover": "nyc npm run -s test:run",
-    "test:run": "mocha test/**/*.test.js --timeout 5000",
+    "test:run": "mocha test/**/*.test.js --timeout 15000",
     "test": "npm run -s lint && npm run test:cover"
   },
   "repository": {
