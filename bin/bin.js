@@ -33,15 +33,18 @@ Usage:
 Options:
   --help             Show help
   --version          Show the version
-  --destination, -d  Directory to output icons    [string]   [default: ${defaults.destination}]
-  --include, -i      Which icons to create        [string[]] [default: ${defaults.include.join(', ')}]
-  --png-size, -s     What size png images create  [number[]] [default: ${defaults['png-size'].join(', ')}]
+  --destination, -d  Directory to output icons            [string]   [default: ${defaults.destination}]
+  --layer, -l        Add individual svg images as layers  [string[]]
+                     stdin is ignored when using layers
+  --include, -i      Which icons to create                [string[]] [default: ${defaults.include.join(', ')}]
+  --png-size, -s     What size png images create          [number[]] [default: ${defaults['png-size'].join(', ')}]
 
 Note: all array arguments can be defined more than once
 
 Examples:
   ${pkg.name} < input.svg
   ${pkg.name} --include icns --include ico < input.svg
+  ${pkg.name} --layer background.svg --layer foreground.svg
   cat input.svg | ${pkg.name} --destination build/assets
 `);
   process.exit(0);
