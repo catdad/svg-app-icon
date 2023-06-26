@@ -5,6 +5,7 @@ const path = require('path');
 const { expect } = require('chai');
 const { sync: png } = require('pngjs').PNG;
 const type = require('file-type');
+const svgRender = require('svg-render');
 
 const svg = '<svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="pink"/></svg>';
 
@@ -48,7 +49,12 @@ const validators = {
     expect(hash(data), '512x512.png has different pixels').to.equal('4314abee99d494ab7a6675107fb5005c7a17367c3800a9b980ce207b1334cb36');
   },
   'icon.svg': async (buffer) => {
-    expect(buffer.toString()).to.equal(svg);
+    // soo... because of layers, the svg won't be just a passthrough, but rather
+    // an svg that renders equivalently, so...
+    const size = 512;
+    const resultPng = await svgRender({ buffer: buffer, width: size, height: size });
+
+    await validators['512x512.png'](resultPng);
   }
 };
 
