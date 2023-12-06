@@ -5,6 +5,7 @@ const { spawn } = require('child_process');
 const { expect } = require('chai');
 const tempy = require('tempy');
 const del = require('del');
+const lodash = require('lodash');
 
 const pkg = require('../package.json');
 const binPath = path.resolve(__dirname, '..', pkg.bin);
@@ -181,7 +182,7 @@ describe('app-icon-maker CLI', () => {
       return ['-l', filepath];
     }));
 
-    await runSuccess(destination, ['-i', 'png', '-i', 'svg', ...layerFiles.flat()]);
+    await runSuccess(destination, ['-i', 'png', '-i', 'svg', ...lodash.flatten(layerFiles)]);
 
     const hashes = {
       '32x32.png': 'c450e4c48d310cac5e1432dc3d8855b9a08da0c1e456eeacdbe4b809c8eb5b27',
