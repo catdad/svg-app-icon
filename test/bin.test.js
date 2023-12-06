@@ -8,7 +8,7 @@ const del = require('del');
 
 const pkg = require('../package.json');
 const binPath = path.resolve(__dirname, '..', pkg.bin);
-const { validateIcons, svg, png, type } = require('./helpers');
+const { validateIcons, svg, layers, png, type } = require('./helpers');
 
 const read = async stream => {
   const content = [];
@@ -168,6 +168,36 @@ describe('app-icon-maker CLI', () => {
       expect(height).to.equal(size);
       expect(depth).to.equal(8);
     }
+  });
+
+  it('can composite multiple svg files as layers', async () => {
+    destination = tempy.directory();
+
+    // write individual layer files to destination
+    // so we don't have to create multiple directories
+    const layerFiles = await Promise.all(layers.map(async (svg, idx) => {
+      const filepath = path.resolve(destination, `${idx}.svg`);
+      await fs.writeFile(filepath, svg);
+      return ['-l', filepath];
+    }));
+
+    await runSuccess(destination, ['-i', 'png', '-i', 'svg', ...layerFiles.flat()]);
+
+    const hashes = {
+      '32x32.png': 'c450e4c48d310cac5e1432dc3d8855b9a08da0c1e456eeacdbe4b809c8eb5b27',
+      '256x256.png': '7413a0717534701a7518a4e35633cae0edb63002c31ef58f092c555f2fa4bdfb',
+      // it's weird that these two are different?
+      '512x512.png': '926163d94eb5dd6309861db76e952d8562c83b815583440508f79b8213ed44b7',
+      'icon.svg': 'bba03b4311a86f6e6f6b7e8b37d444604bca27d95984bd56894ab98857a43cdf'
+    };
+
+    await validateIcons(path.resolve(destination, 'icons'), {
+      hashes,
+      icns: false,
+      ico: false,
+      png: true,
+      svg: true
+    });
   });
 
   it('exits with an error if something goes wrong', async () => {
