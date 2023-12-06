@@ -7,6 +7,8 @@ const { Icns, IcnsImage } = require('@fiahfy/icns');
 const { createCanvas, loadImage } = require('canvas');
 const cheerio = require('cheerio');
 
+const { toArray } = require('./helpers.js');
+
 const dest = (...parts) => path.resolve('.', ...parts);
 
 const write = async (dest, content) => {
@@ -63,8 +65,7 @@ const createSvg = async svg => {
 };
 
 const getInputArray = input => {
-  return (Array.isArray(input) ? input : [input])
-    .map(i => Buffer.isBuffer(i) ? i : Buffer.from(i));
+  return toArray(input).map(i => Buffer.isBuffer(i) ? i : Buffer.from(i));
 };
 
 module.exports = async (input, { destination = 'icons', icns = true, ico = true, png = true, svg = true, pngSizes = [32, 256, 512] } = {}) => {

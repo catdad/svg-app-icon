@@ -57,8 +57,7 @@ if (version) {
 }
 
 const maker = require('../');
-
-const array = v => Array.isArray(v) ? v : [v];
+const { toArray } = require('../src/helpers.js');
 
 const readStdin = async () => {
   const result = [];
@@ -69,8 +68,6 @@ const readStdin = async () => {
 
   return Buffer.concat(result);
 };
-
-const toArray = val => Array.isArray(val) ? val : [val];
 
 const loadLayers = async () => {
   if (!layer) {
@@ -94,7 +91,7 @@ const loadLayers = async () => {
   const png = include.includes('png');
   const svg = include.includes('svg');
 
-  await maker(layers, { destination, icns, ico, png, svg, pngSizes: array(pngSizes) });
+  await maker(layers, { destination, icns, ico, png, svg, pngSizes: toArray(pngSizes) });
 })().catch(e => {
   // eslint-disable-next-line no-console
   console.error(e);
