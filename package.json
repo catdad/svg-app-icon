@@ -25,6 +25,7 @@
     "del": "^5.1.0",
     "eslint": "^5.16.0",
     "file-type": "^14.6.2",
+    "lodash": "^4.17.21",
     "mocha": "^8.0.1",
     "nyc": "^15.1.0",
     "pngjs": "^5.0.0",
@@ -33,8 +34,10 @@
   "dependencies": {
     "@catdad/to-ico": "^1.0.0",
     "@fiahfy/icns": "0.0.6",
+    "canvas": "^2.8.0",
+    "cheerio": "^1.0.0-rc.10",
     "getopts": "^2.2.5",
-    "svg-render": "^1.1.0"
+    "svg-render": "^1.3.0"
   },
   "engines": {
     "node": ">=10.0.0"

@@ -33,10 +33,10 @@ const icons = require('svg-app-icon');
 })();
 ```
 
-### `icons(svg, options)` → `Promise`
+### `icons(svgs, options)` → `Promise`
 
 The arguments for this method are:
-* `svg` _`String`|`Buffer`_ - the SVG that you'd like to use as the icon
+* `svgs` _`String`|`Buffer`|`Array<String|Buffer>`_ - the SVG or SVG layers that you'd like to use as the icon. When multiple images are passed in, they will be layered on top of one another in the provided order
 * `[options]` _`Object`_ - the options, everything is optional
   * `[destination = 'icons']` _`String`_ - the directory to output all icons to. If this direcotry doesn't exist, it will be created
   * `[icns = true]` _`Boolean`_ - whether to generate an ICNS icon for MacOS
@@ -64,15 +64,18 @@ Usage:
 Options:
   --help             Show help
   --version          Show the version
-  --destination, -d  Directory to output icons    [string]   [default: icons]
-  --include, -i      Which icons to create        [string[]] [default: icns, ico, png, svg]
-  --png-size, -s     What size png images create  [number[]] [default: 32, 256, 512]
+  --destination, -d  Directory to output icons            [string]   [default: icons]
+  --layer, -l        Add individual svg images as layers  [string[]]
+                     stdin is ignored when using layers
+  --include, -i      Which icons to create                [string[]] [default: icns, ico, png, svg]
+  --png-size, -s     What size png images create          [number[]] [default: 32, 256, 512]
 
 Note: all array arguments can be defined more than once
 
 Examples:
   svg-app-icon < input.svg
   svg-app-icon --include icns --include ico < input.svg
+  svg-app-icon --layer background.svg --layer foreground.svg
   cat input.svg | svg-app-icon --destination build/assets
 ```
 
