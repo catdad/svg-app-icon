@@ -8,7 +8,7 @@ const tempy = require('tempy');
 const del = require('del');
 
 const maker = require('../');
-const { validateIcons, svg, layers, png, type } = require('./helpers');
+const { validateIconsDirectory, svg, layers, png, type } = require('./helpers');
 
 describe('app-icon-maker API', () => {
   let destination;
@@ -26,7 +26,7 @@ describe('app-icon-maker API', () => {
 
     await maker(svg, { destination });
 
-    await validateIcons(destination);
+    await validateIconsDirectory(destination);
   });
 
   it('generates all icons by default usign svg buffer', async () => {
@@ -34,7 +34,7 @@ describe('app-icon-maker API', () => {
 
     await maker(Buffer.from(svg), { destination });
 
-    await validateIcons(destination);
+    await validateIconsDirectory(destination);
   });
 
   it('will create the output directory if it does not exisst', async () => {
@@ -48,7 +48,7 @@ describe('app-icon-maker API', () => {
     await maker(svg, { destination: outdir });
 
     expect(await exists(outdir)).to.equal(true);
-    await validateIcons(outdir);
+    await validateIconsDirectory(outdir);
   });
 
   for (let exclude of ['icns', 'ico', 'png', 'svg']) {
@@ -57,7 +57,7 @@ describe('app-icon-maker API', () => {
 
       await maker(svg, { destination, [exclude]: false });
 
-      await validateIcons(destination, { [exclude]: false });
+      await validateIconsDirectory(destination, { [exclude]: false });
     });
   }
 
@@ -98,7 +98,7 @@ describe('app-icon-maker API', () => {
       'icon.svg': 'bba03b4311a86f6e6f6b7e8b37d444604bca27d95984bd56894ab98857a43cdf'
     };
 
-    await validateIcons(destination, { hashes });
+    await validateIconsDirectory(destination, { hashes });
   });
 
   it('places all icons in "icons" directory when no options are provided', async () => {
@@ -110,6 +110,6 @@ describe('app-icon-maker API', () => {
 
     await promisify(execFile)(cmd, ['-e', script], { cwd: destination });
 
-    await validateIcons(path.resolve(destination, 'icons'));
+    await validateIconsDirectory(path.resolve(destination, 'icons'));
   });
 });

@@ -9,7 +9,7 @@ const lodash = require('lodash');
 
 const pkg = require('../package.json');
 const binPath = path.resolve(__dirname, '..', pkg.bin);
-const { validateIcons, svg, layers, png, type } = require('./helpers');
+const { validateIconsDirectory, svg, layers, png, type } = require('./helpers');
 
 const read = async stream => {
   const content = [];
@@ -78,7 +78,7 @@ describe('app-icon-maker CLI', () => {
 
     await runSuccess(destination);
 
-    await validateIcons(path.resolve(destination, 'icons'));
+    await validateIconsDirectory(path.resolve(destination, 'icons'));
   });
 
   it('optionally outputs to a custom destination', async () => {
@@ -86,7 +86,7 @@ describe('app-icon-maker CLI', () => {
 
     await runSuccess(destination, ['--destination', 'a/b/c']);
 
-    await validateIcons(path.resolve(destination, 'a/b/c'));
+    await validateIconsDirectory(path.resolve(destination, 'a/b/c'));
   });
 
   for (let include of ['icns', 'ico', 'png', 'svg']) {
@@ -102,7 +102,7 @@ describe('app-icon-maker CLI', () => {
         svg: include === 'svg',
       };
 
-      await validateIcons(path.resolve(destination, 'icons'), { ...expected });
+      await validateIconsDirectory(path.resolve(destination, 'icons'), { ...expected });
     });
   }
 
@@ -118,7 +118,7 @@ describe('app-icon-maker CLI', () => {
       svg: true
     };
 
-    await validateIcons(path.resolve(destination, 'icons'), { ...expected });
+    await validateIconsDirectory(path.resolve(destination, 'icons'), { ...expected });
   });
 
   it('can optionally generate a single arbitrary png size', async () => {
@@ -192,7 +192,7 @@ describe('app-icon-maker CLI', () => {
       'icon.svg': 'bba03b4311a86f6e6f6b7e8b37d444604bca27d95984bd56894ab98857a43cdf'
     };
 
-    await validateIcons(path.resolve(destination, 'icons'), {
+    await validateIconsDirectory(path.resolve(destination, 'icons'), {
       hashes,
       icns: false,
       ico: false,

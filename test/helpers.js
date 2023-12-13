@@ -65,20 +65,32 @@ const validators = {
   }
 };
 
-const validateIcons = async (dir, { icns = true, ico = true, png = true, svg = true, hashes = {} } = {}) => {
-  const expectedFiles = []
+const validateIcons = async (data, { icns = true, ico = true, png = true, svg = true, hashes = {} } = {}) => {
+  const expectedIcons = []
     .concat(icns ? ['icon.icns'] : [])
     .concat(ico ? ['icon.ico'] : [])
     .concat(png ? ['32x32.png', '256x256.png', '512x512.png'] : [])
     .concat(svg ? ['icon.svg'] : []);
 
-  const actualFiles = await fs.readdir(dir);
+  const actualIcons = Object.keys(data);
 
-  expect(actualFiles.sort()).to.deep.equal(expectedFiles.sort());
+  expect(actualIcons.sort()).to.deep.equal(expectedIcons.sort());
 
-  for (let file of expectedFiles) {
-    await validators[file](await fs.readFile(path.resolve(dir, file)), hashes[file]);
+  for (const name of expectedIcons) {
+    expect(data).to.have.property(name);
+    await validators[name](data[name], hashes[name]);
   }
 };
 
-module.exports = { hash, validateIcons, validators, svg, layers, png, type };
+const validateIconsDirectory = async (dir, options) => {
+  const actualFiles = await fs.readdir(dir);
+  const data = {};
+
+  for (let file of actualFiles) {
+    data[file] = await fs.readFile(path.resolve(dir, file));
+  }
+
+  await validateIcons(data, options);
+};
+
+module.exports = { hash, validateIcons, validateIconsDirectory, validators, svg, layers, png, type };
