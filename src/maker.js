@@ -68,24 +68,46 @@ const getInputArray = input => {
   return toArray(input).map(i => Buffer.isBuffer(i) ? i : Buffer.from(i));
 };
 
-module.exports = async (input, { destination = 'icons', icns = true, ico = true, png = true, svg = true, pngSizes = [32, 256, 512] } = {}) => {
+async function* generateIcons(input, { icns = true, ico = true, png = true, svg = true, pngSizes = [32, 256, 512] } = {}) {
   const buffers = getInputArray(input);
 
   if (svg) {
-    await write(dest(destination, 'icon.svg'), await createSvg(buffers));
+    yield {
+      name: 'icon.svg',
+      ext: 'svg',
+      buffer: Buffer.from(await createSvg(buffers))
+    };
   }
 
   if (ico) {
-    await write(dest(destination, 'icon.ico'), await createIco(buffers));
+    yield {
+      name: 'icon.ico',
+      ext: 'ico',
+      buffer: Buffer.from(await createIco(buffers))
+    };
   }
 
   if (icns) {
-    await write(dest(destination, 'icon.icns'), await createIcns(buffers));
+    yield {
+      name: 'icon.icns',
+      ext: 'icns',
+      buffer: Buffer.from(await createIcns(buffers))
+    };
   }
 
   if (png) {
     for (let size of pngSizes) {
-      await write(dest(destination, `${size}x${size}.png`), await createPng(buffers, size));
+      yield {
+        name: `${size}x${size}.png`,
+        ext: 'png',
+        buffer: Buffer.from(await createPng(buffers, size))
+      };
     }
+  }
+}
+
+module.exports = async (input, { destination = 'icons', ...options } = {}) => {
+  for await (const icon of generateIcons(input, options)) {
+    await write(dest(destination, icon.name), icon.buffer);
   }
 };
