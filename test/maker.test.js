@@ -10,7 +10,7 @@ const del = require('del');
 const maker = require('../');
 const { validateIconsDirectory, svg, layers, png, type } = require('./helpers');
 
-describe('app-icon-maker API', () => {
+describe('app-icon-maker API filesystem icons', () => {
   let destination;
 
   afterEach(async () => {
