@@ -37,7 +37,7 @@ describe('app-icon-maker API filesystem icons', () => {
     await validateIconsDirectory(destination);
   });
 
-  it('will create the output directory if it does not exisst', async () => {
+  it('will create the output directory if it does not exist', async () => {
     destination = tempy.directory();
 
     const exists = p => fs.access(p).then(() => true).catch(() => false);
