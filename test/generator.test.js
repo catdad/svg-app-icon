@@ -31,4 +31,22 @@ describe('app-icon-maker API generateIcons', () => {
 
     await validateIcons(icons);
   });
+
+  it('generates all icons by default usign svg buffer', async () => {
+    const icons = await getGeneratedIcons(generateIcons(Buffer.from(svg)));
+
+    expect(Object.keys(icons)).to.have.a.lengthOf(6);
+
+    await validateIcons(icons);
+  });
+
+  for (let exclude of ['icns', 'ico', 'png', 'svg']) {
+    it(`can optionally skip ${exclude} output`, async () => {
+      const icons = await getGeneratedIcons(generateIcons(svg, { [exclude]: false }));
+
+      expect(Object.keys(icons)).to.have.a.lengthOf(exclude === 'png' ? 3 : 5);
+
+      await validateIcons(icons, { [exclude]: false });
+    });
+  }
 });
