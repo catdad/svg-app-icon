@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 
 const { generateIcons } = require('../');
-const { validateIcons, svg } = require('./helpers');
+const { validateIcons, svg, layers, layerHashes } = require('./helpers');
 
 describe('app-icon-maker API generateIcons', () => {
   const validateIconEntity = icon => {
@@ -49,4 +49,12 @@ describe('app-icon-maker API generateIcons', () => {
       await validateIcons(icons, { [exclude]: false });
     });
   }
+
+  it('can composite multiple svg files as layers', async () => {
+    const icons = await getGeneratedIcons(generateIcons(layers));
+
+    expect(Object.keys(icons)).to.have.a.lengthOf(6);
+
+    await validateIcons(icons, { hashes: layerHashes });
+  });
 });
