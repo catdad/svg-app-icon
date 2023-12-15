@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 
 const { generateIcons } = require('../');
-const { validateIcons, svg, layers, layerHashes } = require('./helpers');
+const { validateIcons, svg, layers, layerHashes, png } = require('./helpers');
 
 describe('app-icon-maker API generateIcons', () => {
   const validateIconEntity = icon => {
@@ -56,5 +56,26 @@ describe('app-icon-maker API generateIcons', () => {
     expect(Object.keys(icons)).to.have.a.lengthOf(6);
 
     await validateIcons(icons, { hashes: layerHashes });
+  });
+
+  it('can optionally generate arbitrary png sizes', async () => {
+    const pngSizes = [47, 345, 1000];
+
+    const generator = generateIcons(layers, { icns: false, ico: false, svg: false, pngSizes });
+    const icons = await getGeneratedIcons(generator);
+
+    expect(Object.keys(icons)).to.deep.equal([
+      '47x47.png',
+      '345x345.png',
+      '1000x1000.png'
+    ]);
+
+    for (let size of pngSizes) {
+      const { width, height, depth } = png.read(icons[`${size}x${size}.png`]);
+
+      expect(width).to.equal(size);
+      expect(height).to.equal(size);
+      expect(depth).to.equal(8);
+    }
   });
 });
