@@ -5,12 +5,22 @@ const { validateIcons, svg, layers, layerHashes, png } = require('./helpers');
 
 describe('app-icon-maker API generateIcons', () => {
   const validateIconEntity = icon => {
-    expect(icon).to.have.all.keys(['buffer', 'name', 'ext']);
+    const keys = ['buffer', 'name', 'ext'];
+
+    if (icon.ext === 'png') {
+      keys.push('size');
+    }
+
+    expect(icon).to.have.all.keys(keys);
     expect(icon.buffer).to.be.instanceOf(Buffer);
     expect(icon.ext).to.be.a('string');
     expect(icon.name).to.be.a('string');
 
     expect(icon.name.split('.').pop()).to.equal(icon.ext);
+
+    if (icon.ext === 'png') {
+      expect(icon.name).to.equal(`${icon.size}x${icon.size}.png`);
+    }
   };
 
   const getGeneratedIcons = async generator => {

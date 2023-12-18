@@ -92,7 +92,8 @@ async function* generateIcons(input, { icns = true, ico = true, png = true, svg 
       yield {
         name: `${size}x${size}.png`,
         ext: 'png',
-        buffer: Buffer.from(await createPng(buffers, size))
+        buffer: Buffer.from(await createPng(buffers, size)),
+        size
       };
     }
   }
