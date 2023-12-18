@@ -49,6 +49,7 @@ The [`AsyncGenerator`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/R
 * `name` _`String`_: the name of the file.
 * `ext` _`String`_: the extension that should be used for the file. One of `['png', 'icns', 'ico']`
 * `buffer` _`Buffer`_: the bytes of the generated icon file
+* `size` _`Number`_: optional, only present for `png` icons, this is the size that was used to render the icon
 
 ## 💻 CLI
 
