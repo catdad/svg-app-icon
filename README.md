@@ -21,31 +21,35 @@ npm install svg-app-icon
 ## 👨‍💻 API
 
 ```javascript
+const path = require('path');
 const { promises: fs } = require('fs');
-const icons = require('svg-app-icon');
+const { generateIcons } = require('svg-app-icon');
 
 (async () => {
   const svg = await fs.readFile('my-icon.svg');
 
-  await icons(svg, {
-    destination: './my-output-directory'
-  });
+  for await (const icon of generateIcons(svg)) {
+    await fs.writeFile(path.resolve('./my-output-directory', icon.name), icon.buffer);
+  }
 })();
 ```
 
-### `icons(svgs, options)` → `Promise`
+### `generateIcons(svgs, options)` → `AsyncGenerator`
 
 The arguments for this method are:
 * `svgs` _`String`|`Buffer`|`Array<String|Buffer>`_ - the SVG or SVG layers that you'd like to use as the icon. When multiple images are passed in, they will be layered on top of one another in the provided order
 * `[options]` _`Object`_ - the options, everything is optional
-  * `[destination = 'icons']` _`String`_ - the directory to output all icons to. If this direcotry doesn't exist, it will be created
   * `[icns = true]` _`Boolean`_ - whether to generate an ICNS icon for MacOS
   * `[ico = true]` _`Boolean`_ - whether to generate an ICO icon for Windows
   * `[png = true]` _`Boolean`_ - whether to generate all PNG icon sizes for Linux
   * `[svg = true]` _`Boolean`_ - whether to generate output the original SVG to the output destination
   * `[pngSizes = [32, 256, 512]]` _`Array<Integer>`_ - the sizes to output for PNG icons, in case you need any additional sizes
 
-This promise resolves with `undefined`.
+The [`AsyncGenerator`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AsyncGenerator) will yield `icon` opject. They contain the following properties:
+* `name` _`String`_: the name of the file.
+* `ext` _`String`_: the extension that should be used for the file. One of `['png', 'icns', 'ico']`
+* `buffer` _`Buffer`_: the bytes of the generated icon file
+* `size` _`Number`_: optional, only present for `png` icons, this is the size that was used to render the icon
 
 ## 💻 CLI
 

@@ -16,6 +16,14 @@ const layers = [svg, `<svg viewBox="0 0 500 500">
   <ellipse cx="222.25" cy="412.5" rx="54.75" ry="39.5" style="fill:rgb(255,110,0);"/>
 </svg>`];
 
+const layerHashes = {
+  '32x32.png': 'c450e4c48d310cac5e1432dc3d8855b9a08da0c1e456eeacdbe4b809c8eb5b27',
+  '256x256.png': '7413a0717534701a7518a4e35633cae0edb63002c31ef58f092c555f2fa4bdfb',
+  // it's weird that these two are different?
+  '512x512.png': '926163d94eb5dd6309861db76e952d8562c83b815583440508f79b8213ed44b7',
+  'icon.svg': 'bba03b4311a86f6e6f6b7e8b37d444604bca27d95984bd56894ab98857a43cdf'
+};
+
 const hash = buffer => crypto.createHash('sha256').update(buffer).digest('hex');
 
 const validators = {
@@ -65,20 +73,32 @@ const validators = {
   }
 };
 
-const validateIcons = async (dir, { icns = true, ico = true, png = true, svg = true, hashes = {} } = {}) => {
-  const expectedFiles = []
+const validateIcons = async (data, { icns = true, ico = true, png = true, svg = true, hashes = {} } = {}) => {
+  const expectedIcons = []
     .concat(icns ? ['icon.icns'] : [])
     .concat(ico ? ['icon.ico'] : [])
     .concat(png ? ['32x32.png', '256x256.png', '512x512.png'] : [])
     .concat(svg ? ['icon.svg'] : []);
 
-  const actualFiles = await fs.readdir(dir);
+  const actualIcons = Object.keys(data);
 
-  expect(actualFiles.sort()).to.deep.equal(expectedFiles.sort());
+  expect(actualIcons.sort()).to.deep.equal(expectedIcons.sort());
 
-  for (let file of expectedFiles) {
-    await validators[file](await fs.readFile(path.resolve(dir, file)), hashes[file]);
+  for (const name of expectedIcons) {
+    expect(data).to.have.property(name);
+    await validators[name](data[name], hashes[name]);
   }
 };
 
-module.exports = { hash, validateIcons, validators, svg, layers, png, type };
+const validateIconsDirectory = async (dir, options) => {
+  const actualFiles = await fs.readdir(dir);
+  const data = {};
+
+  for (let file of actualFiles) {
+    data[file] = await fs.readFile(path.resolve(dir, file));
+  }
+
+  await validateIcons(data, options);
+};
+
+module.exports = { hash, validateIcons, validateIconsDirectory, validators, svg, layers, layerHashes, png, type };
