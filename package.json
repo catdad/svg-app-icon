@@ -1,6 +1,6 @@
 {
   "name": "svg-app-icon",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "create high-quality desktop app icons for Windows, MacOS, and Linux using an SVG source",
   "main": "src/index.js",
   "bin": "bin/bin.js",
