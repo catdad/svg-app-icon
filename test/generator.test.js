@@ -81,7 +81,7 @@ describe('app-icon-maker API generateIcons', () => {
     ]);
 
     for (let size of pngSizes) {
-      const { width, height, depth } = png.read(icons[`${size}x${size}.png`]);
+      const { width, height, depth } = await png(icons[`${size}x${size}.png`]);
 
       expect(width).to.equal(size);
       expect(height).to.equal(size);

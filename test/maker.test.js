@@ -78,7 +78,7 @@ describe('app-icon-maker API filesystem icons', () => {
     for (let size of pngSizes) {
       const buffer = await fs.readFile(path.resolve(destination, `${size}x${size}.png`));
       expect(await type.fromBuffer(buffer)).to.deep.equal({ ext: 'png', mime: 'image/png' });
-      const { width, height, depth } = png.read(buffer);
+      const { width, height, depth } = await png(buffer);
 
       expect(width).to.equal(size);
       expect(height).to.equal(size);

@@ -3,10 +3,11 @@ const crypto = require('crypto');
 const path = require('path');
 
 const { expect } = require('chai');
-const { sync: png } = require('pngjs').PNG;
 const jimp = require('jimp');
 const type = require('file-type');
 const svgRender = require('svg-render');
+
+const png = async buffer => (await jimp.read(buffer)).bitmap;
 
 const svg = '<svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="pink"/></svg>';
 const layers = [svg, `<svg viewBox="0 0 500 500">
