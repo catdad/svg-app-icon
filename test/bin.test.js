@@ -137,7 +137,7 @@ describe('app-icon-maker CLI', () => {
 
     const buffer = await fs.readFile(path.resolve(outdir, `${size}x${size}.png`));
     expect(await type.fromBuffer(buffer)).to.deep.equal({ ext: 'png', mime: 'image/png' });
-    const { width, height, depth } = png.read(buffer);
+    const { width, height, depth } = await png(buffer);
 
     expect(width).to.equal(size);
     expect(height).to.equal(size);
@@ -163,7 +163,7 @@ describe('app-icon-maker CLI', () => {
     for (let size of pngSizes) {
       const buffer = await fs.readFile(path.resolve(outdir, `${size}x${size}.png`));
       expect(await type.fromBuffer(buffer)).to.deep.equal({ ext: 'png', mime: 'image/png' });
-      const { width, height, depth } = png.read(buffer);
+      const { width, height, depth } = await png(buffer);
 
       expect(width).to.equal(size);
       expect(height).to.equal(size);

@@ -1,22 +1,12 @@
 const renderSvg = require('svg-render');
 const toIco = require('@catdad/to-ico');
 const { Icns, IcnsImage } = require('@fiahfy/icns');
-const { createCanvas, loadImage } = require('canvas');
 const cheerio = require('cheerio');
 
 const { toArray } = require('./helpers.js');
 
-const createPng = async (buffers, size) => {
-  const canvas = createCanvas(size, size);
-  const ctx = canvas.getContext('2d');
-
-  for (const buffer of buffers) {
-    const png = await renderSvg({ buffer, width: size, height: size });
-    const image = await loadImage(png);
-    ctx.drawImage(image, 0, 0);
-  }
-
-  return canvas.toBuffer('image/png');
+const createPng = async (buffer, size) => {
+  return await renderSvg({ buffer, width: size, height: size });
 };
 
 const createIco = async svg => await toIco(
@@ -61,13 +51,15 @@ const getInputArray = input => {
 };
 
 async function* generateIcons(input, { icns = true, ico = true, png = true, svg = true, pngSizes = [32, 256, 512] } = {}) {
-  const buffers = getInputArray(input);
+  // merge individual layers to single layered svg
+  // we will render this single svg for the rest of the icons
+  const mergedSvg = Buffer.from(await createSvg(getInputArray(input)));
 
   if (svg) {
     yield {
       name: 'icon.svg',
       ext: 'svg',
-      buffer: Buffer.from(await createSvg(buffers))
+      buffer: mergedSvg
     };
   }
 
@@ -75,7 +67,7 @@ async function* generateIcons(input, { icns = true, ico = true, png = true, svg 
     yield {
       name: 'icon.ico',
       ext: 'ico',
-      buffer: Buffer.from(await createIco(buffers))
+      buffer: Buffer.from(await createIco(mergedSvg))
     };
   }
 
@@ -83,7 +75,7 @@ async function* generateIcons(input, { icns = true, ico = true, png = true, svg 
     yield {
       name: 'icon.icns',
       ext: 'icns',
-      buffer: Buffer.from(await createIcns(buffers))
+      buffer: Buffer.from(await createIcns(mergedSvg))
     };
   }
 
@@ -92,7 +84,7 @@ async function* generateIcons(input, { icns = true, ico = true, png = true, svg 
       yield {
         name: `${size}x${size}.png`,
         ext: 'png',
-        buffer: Buffer.from(await createPng(buffers, size)),
+        buffer: Buffer.from(await createPng(mergedSvg, size)),
         size
       };
     }
