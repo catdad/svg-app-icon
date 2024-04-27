@@ -1,7 +1,7 @@
 const renderSvg = require('svg-render');
 const toIco = require('@catdad/to-ico');
 const { Icns, IcnsImage } = require('@fiahfy/icns');
-const { createCanvas, loadImage } = require('canvas');
+const { createCanvas, loadImage } = require('@napi-rs/canvas');
 const cheerio = require('cheerio');
 
 const { toArray } = require('./helpers.js');
