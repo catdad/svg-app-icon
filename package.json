@@ -34,7 +34,6 @@
   "dependencies": {
     "@catdad/to-ico": "^1.0.0",
     "@fiahfy/icns": "0.0.6",
-    "@napi-rs/canvas": "^0.1.52",
     "cheerio": "^1.0.0-rc.10",
     "getopts": "^2.2.5",
     "svg-render": "^2.0.0"

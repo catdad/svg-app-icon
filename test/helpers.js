@@ -17,18 +17,16 @@ const layers = [svg, `<svg viewBox="0 0 500 500">
 </svg>`];
 
 const defaultHashes = {
-  '32x32.png': 'd0fa2f4c025c9d4f3a23a02b80d43ff4ac3c76086c7b637efd7496acaa678320',
-  '256x256.png': '475443b27966c9eaf9b277232ed39be5fb8991c51e715e555e9d3be958b20579',
-  // it's weird that these two are different?
-  '512x512.png': '16fed629eb1e857b90a1cda053d6e65bf3ccf43946cefe59e83df0d25350d56c',
+  '32x32.png': 'cafb6637775b10a1f69b32adce5fc7c2abc7486f7f20a9f4bf6aa42d1ee82c4d',
+  '256x256.png': 'cc8517d70701b3f31213febe084dd22ad6f6551a1bb5a7163bd9dd4938a46560',
+  '512x512.png': '8d374e1f9540eff522ca1d1ee408a906b923f8df2fb9051c9f321bb3936f2e48',
   'icon.svg': '8d374e1f9540eff522ca1d1ee408a906b923f8df2fb9051c9f321bb3936f2e48'
 };
 
 const layerHashes = {
-  '32x32.png': '85162a43990dc8ad30762ac386a19e1d1b3d8e3e39a0547ef231699085f5964a',
-  '256x256.png': 'f99eb45439cb6881829597b570b3f966295ecf67f00c087f53e37304578c2edb',
-  // it's weird that these two are different?
-  '512x512.png': 'f54887d57d0ebc9d7a2adbc9c277a8201a70351a628428baac32ca81dd24a899',
+  '32x32.png': '947d45a9bb8b57d6d334b2526c78584eddb5d6fe372dc2e6cc22e61c2f61ab72',
+  '256x256.png': '3b0fe8dd0d5f1383e6869c02709902729d1cd515090d6997280ac1a06f97ab5b',
+  '512x512.png': '5c2f43c9a83d2f3b05bf51cf48cf4861d20f42d5175aaf4d67d31d9c58b17a37',
   'icon.svg': '5c2f43c9a83d2f3b05bf51cf48cf4861d20f42d5175aaf4d67d31d9c58b17a37'
 };
 
@@ -91,6 +89,12 @@ const validateIcons = async (data, { icns = true, ico = true, png = true, svg = 
   const actualIcons = Object.keys(data);
 
   expect(actualIcons.sort()).to.deep.equal(expectedIcons.sort());
+
+  // for (const name of expectedIcons) {
+  //   if (/png$/.test(name)) {
+  //     require('fs').writeFileSync(`./temp/${Date.now()}.png`, data[name]);
+  //   }
+  // }
 
   for (const name of expectedIcons) {
     expect(data).to.have.property(name);
