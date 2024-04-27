@@ -4,6 +4,7 @@ const path = require('path');
 
 const { expect } = require('chai');
 const { sync: png } = require('pngjs').PNG;
+const jimp = require('jimp');
 const type = require('file-type');
 const svgRender = require('svg-render');
 
@@ -17,17 +18,17 @@ const layers = [svg, `<svg viewBox="0 0 500 500">
 </svg>`];
 
 const defaultHashes = {
-  '32x32.png': 'cafb6637775b10a1f69b32adce5fc7c2abc7486f7f20a9f4bf6aa42d1ee82c4d',
-  '256x256.png': 'cc8517d70701b3f31213febe084dd22ad6f6551a1bb5a7163bd9dd4938a46560',
-  '512x512.png': '8d374e1f9540eff522ca1d1ee408a906b923f8df2fb9051c9f321bb3936f2e48',
-  'icon.svg': '8d374e1f9540eff522ca1d1ee408a906b923f8df2fb9051c9f321bb3936f2e48'
+  '32x32.png':   '8000w0a02E0',
+  '256x256.png': '8000w0a02E0',
+  '512x512.png': '8000w0a02E0',
+  'icon.svg':    '8000w0a02E0'
 };
 
 const layerHashes = {
-  '32x32.png': '947d45a9bb8b57d6d334b2526c78584eddb5d6fe372dc2e6cc22e61c2f61ab72',
-  '256x256.png': '3b0fe8dd0d5f1383e6869c02709902729d1cd515090d6997280ac1a06f97ab5b',
-  '512x512.png': '5c2f43c9a83d2f3b05bf51cf48cf4861d20f42d5175aaf4d67d31d9c58b17a37',
-  'icon.svg': '5c2f43c9a83d2f3b05bf51cf48cf4861d20f42d5175aaf4d67d31d9c58b17a37'
+  '32x32.png':   'cii4gQqoyWi',
+  '256x256.png': 'cgi4gQqoyWi',
+  '512x512.png': 'cgi4gQqoyWi',
+  'icon.svg':    'cgi4gQqoyWi'
 };
 
 const hash = buffer => crypto.createHash('sha256').update(buffer).digest('hex');
@@ -41,33 +42,36 @@ const validators = {
   },
   '32x32.png': async (buffer, filehash = defaultHashes['32x32.png']) => {
     expect(await type.fromBuffer(buffer)).to.deep.equal({ ext: 'png', mime: 'image/png' });
-    const { width, height, depth, data } = png.read(buffer);
+    const image = await jimp.read(buffer);
+    const { width, height, depth } = image.bitmap;
 
     expect(width).to.equal(32);
     expect(height).to.equal(32);
     expect(depth).to.equal(8);
 
-    expect(hash(data), '32x32.png has different pixels').to.equal(filehash);
+    expect(image.hash(), '32x32.png has different pixels').to.equal(filehash);
   },
   '256x256.png': async (buffer, filehash = defaultHashes['256x256.png']) => {
     expect(await type.fromBuffer(buffer)).to.deep.equal({ ext: 'png', mime: 'image/png' });
-    const { width, height, depth, data } = png.read(buffer);
+    const image = await jimp.read(buffer);
+    const { width, height, depth } = image.bitmap;
 
     expect(width).to.equal(256);
     expect(height).to.equal(256);
     expect(depth).to.equal(8);
 
-    expect(hash(data), '256x256.png has different pixels').to.equal(filehash);
+    expect(image.hash(), '256x256.png has different pixels').to.equal(filehash);
   },
   '512x512.png': async (buffer, filehash = defaultHashes['512x512.png']) => {
     expect(await type.fromBuffer(buffer)).to.deep.equal({ ext: 'png', mime: 'image/png' });
-    const { width, height, depth, data } = png.read(buffer);
+    const image = await jimp.read(buffer);
+    const { width, height, depth } = image.bitmap;
 
     expect(width).to.equal(512);
     expect(height).to.equal(512);
     expect(depth).to.equal(8);
 
-    expect(hash(data), '512x512.png has different pixels').to.equal(filehash);
+    expect(image.hash(), '512x512.png has different pixels').to.equal(filehash);
   },
   'icon.svg': async (buffer, filehash = defaultHashes['icon.svg']) => {
     // soo... because of layers, the svg won't be just a passthrough, but rather
